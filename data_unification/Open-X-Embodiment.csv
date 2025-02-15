@@ -1,0 +1,308 @@
+dataset_name,Robot,Robot Morphology,Control Frequency,State Space,Action Space,Action Definition,# RGB Cams,# Depth Cams,# Wrist Cams,OCTO,OpenVLA,HPT,Crossformer
+RT-1 Robot Action,Google Robot,Mobile Manipulator,3,"base_pose_tool_reached (7)
+gripper closed (1)
+gripper closedness commanded (1)
+height to bottom (1) 
+orientation start (4)
+rotation delta to go (3)",EEF Position,"base displacement (2)
+base displacement rotation (1)
+EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",1,1,0,,,,
+QT-Opt,Kuka iiwa,Single Arm,10,"base pose tool reached (7)
+gripper closed (1)
+gripper closedness commanded (1)
+height to bottom (1) ",EEF Position,"base displacement (2)
+base displacement rotation (1)
+EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",1,0,0,,,,
+Berkeley Bridge,WidowX,Single Arm,5,"EEF xyz (3), 
+EEF rpy (3), 
+gripper state (1) ",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",4,1,1,,,,
+Freiburg Franka Play,Franka,Single Arm,15,"EEF xyz (3), 
+EEF rpy (3), 
+gripper width (1), 
+joint positions (7), 
+gripper action (1)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,2,2,,,,
+USC Jaco Play,Jaco 2,Single Arm,10,"joint pos (8) (last 2 elements of this that correspond to the gripper joints)
+EEF cartesian pos (7)
+EEF cartesian velocity (6)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+Berkeley Cable Routing,Franka,Single Arm,10,"EEF Pose (7)
+",EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3)",3,0,2,,,,
+Roboturk,Sawyer,Single Arm,10,,EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,1,0,,,,
+NYU VINN,Hello Stretch,Mobile Manipulator,3,,EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",1,0,1,,,,
+Austin VIOLA,Franka,Single Arm,20,"EEF pose Homogeneous martix (16)
+gripper_states (1)
+joint pos (7)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+Berkeley Autolab UR5,UR5,Single Arm,5,"joint pos (6)
+EEF xyz (3)
+EEF quaternion (4)
+gripper state (1)
+action_blocked (1)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,1,1,,,,
+TOTO Benchmark,Franka,Single Arm,30,joint pos (7),Joint position ,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",1,0,0,,,,
+Language Table,xArm,Single Arm,10,"effector_target_translation (2)
+effector_translation (2)",EEF Position,EEF xy (2),1,0,0,,,,
+Columbia PushT Dataset,UR5,Single Arm,10,EEF xy (2),EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",5,0,1,,,,
+Stanford Kuka Multimodal,Kuka iiwa => Panda,Single Arm,20,"joint pos (7)
+gripper open/close (1)",EEF Position,"EEF position (3) 
+gripper open/close (1)
+",1,0,0,,,,
+NYU ROT,xArm,Single Arm,3,"EEF xyz (3)
+EEF rpy (3)
+gripper open/close (1)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",1,0,0,,,,
+Stanford HYDRA,Franka,Single Arm,10,"EEF xyz (3)
+EEF quaternion (4)
+EEF rpy (3)
+joint pos (7)
+joint vel (7)
+gripper state (3)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+Austin BUDS,Franka,Single Arm,20,"joint pos (7)
+griiper state (1)
+EEF homogeneous matrix (16)
+",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+NYU Franka Play,Franka,Single Arm,3,"joint pos (7)
+EEF xyz (3)
+EEF rpy (3)","EEF velocity
+","joint velocities (7), 
+EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,2,0,,,,
+Maniskill,Franka,Single Arm,20,"joint pos (7)
+gripper state (2)
+joint vel (7)
+gripper vel (2)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,2,2,,,,
+Furniture Bench,Franka,Single Arm,10,"EEF xyz (3)
+EEF quaternion (4)
+EEF xyz vel(3)
+EEF rpy vel (3)
+joint pos (7)
+joint vels (7)
+joint torques (7)
+gripper width (1)",EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+CMU Franka Exploration,Franka,Single Arm,10,,EEF Position,"EEF position (3) 
+EEF orientation (3)
+gripper (1)
+",1,0,0,,,,
+UCSD Kitchen,xArm,Single Arm,2,"joint pos (7)
+joint vels (7)
+joint torques (7)",EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper closedness action (1)",1,0,0,,,,
+UCSD Pick Place,xArm,Single Arm,3,"EEF xyz (3)
+EEF rpy (3)
+gripper width (1)",EEF velocity,"EEF vel (3)
+Gripper open/close (1)",1,0,0,,,,
+Austin Sailor,Franka,Single Arm,20,joint pos (7),EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+Austin Sirius,Franka,Single Arm,20,joint pos (7),EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper closedness action (1)",2,0,1,,,,
+BC-Z,Google Robot,Mobile Manipulator,10,"EEF rpy (3) 
+gripper width (1)
+EEF xyz (3) ",EEF Position,"EEF delta rpy (30) next 10 actions for the rotation. Each action is a 3D delta to add to the current axis angle
+gripper closedness action (10)  The next 10 actions for the gripper
+EEF delta xyz (30) The next 10 actions for the positions. Each action is a 3D delta to add to current position",1,0,0,1.0,,,
+USC Cloth Sim,Franka,Single Arm,10,,EEF Position,"EEF xyz (3)
+gripper closedness action (1)",1,0,0,,,,
+Tokyo PR2 Fridge Opening,PR2,Single Arm,10,"EEF xyz (3)
+EEF rpy (3)
+gripper width (1)",EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper closedness action (1)",1,0,0,,,,
+Tokyo PR2 Tabletop Manipulation,PR2,Single Arm,10,"EEF xyz (3)
+EEF rpy (3)
+gripper width (1)",EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper open/cose (1) 
+terminate episode (1)",1,0,0,,,,
+Saytap,Unitree A1,Quadrupedal Robot,50,"desired_pattern (4,5) Desired foot contact pattern for the 4 legs
+desired_vel (3)  The first 2 are linear velocities along and perpendicular to the heading direction, the 3rd is the desired angular velocity about the yaw axis.
+prev_act (12) Actions applied in the previous step
+proj_grav_vec (3) The gravity vector [0, 0, -1] in the robot base frame.
+state (30) [3x robot base linear velocity, 3x base angular vel, 12x joint position, 12x joint velocity]",Joint position,joint positions (12),0,0,0,,,,
+UTokyo xArm PickPlace,xArm,Single Arm,10,"EEF xyz (3)
+EEF yaw-pitch-roll (3) 
+joint pos (7)
+joint vel (7)
+joint_trajectory (21)  [7x robot joint angles, 7x robot joint velocity, 7x robot joint acceralation]",EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper open/cose (1) ",4,0,1,,,,
+UTokyo xArm Bimanual,xArm Bimanual,Bi-Manual,10,"EEF xyz (L) (3) 
+EEF yaw/pitch/roll (L) (3) 
+EEF xyz (R) (3) 
+EEF yaw/pitch/roll (R) (3) ",EEF Position,"EEF xyz (L) (3)
+EEF yaw/pitch/roll (L) (3)
+gripper open/close position (L) (1)
+EEF xyz (R) (3)
+EEF yaw/pitch/roll (R) (3)
+gripper open/close position (R) (1)",1,0,0,,,,
+Robonet,Multi-Robot,Single Arm,1,"EEF xyz (3)
+gripper’s yaw angle  (1)
+gripper joint-angle value (1)",EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3)
+gripper joint angle (1)",3,0,0,,,,
+Berkeley MVP Data,xArm,Single Arm,5,"gripper (1)
+joint pos (7)
+EEF xyz (3)
+EEF quaternion (4)",Joint position,"delta joint pos (7)
+gripper open/close (1)",1,0,1,,,,
+Berkeley RPT Data,Franka,Single Arm,30,"gripper (1)
+joint pos (7)",Joint position,"delta joint pos (7)
+gripper open/close (1)",3,0,1,,,,
+KAIST Nonprehensile Objects,Franka,Single Arm,10,"joint pos (7)
+EEF xyz (3)
+EEF quaternion (4)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)
+robot joint k_p gain coefficient (7)
+joint damping ratio coefficient (7)",1,0,0,,,,
+QUT Dynamic Grasping,Franka,Single Arm,30,,EEF Position,,3,0,2,,,,
+Stanford MaskVIT Data,Sawyer,Single Arm,"N/A, actions are run until robot comes to rest near the target position (quasistatic assumption)","joint pos (7)
+joint vel (7)
+gripper width (1)",EEF Position,"EEF delta xyz (3)
+EEF delta yaw (1)
+gripper open/close (1)",1,0,0,,,,
+LSMO Dataset,Cobotta,Single Arm,10,"EEF xyz (3)
+EEF rpy (3)
+joint pos (6)
+gripper width (1) ",EEF velocity,"EEF xyz (3)
+EEF rpy (3)
+gripper action (1) ",1,0,0,,,,
+DLR Sara Pour Dataset,DLR SARA,Single Arm,10,"EEF xyz (3)
+EEF yaw/pitch/roll (3)",EEF velocity,"EEF xyz (3)
+EEF yaw-pitch-roll (3)
+gripper action (1) ",1,0,0,,,,
+DLR Sara Grid Clamp Dataset,DLR SARA,Single Arm,10,"EEF xyz (3)
+EEF yaw/pitch/roll (3)
+EEF wrench (6)",EEF velocity,"EEF xyz (3)
+EEF yaw-pitch-roll (3) 
+gripper action (1) ",1,0,0,,,,
+DLR Wheelchair Shared Control,DLR EDAN,Single Arm,5,"EEF xyz (3)
+EEF yaw/pitch/roll (3)",EEF Position,"EEF xyz (3)
+EEF yaw-pitch-roll (3)
+gripper action (1) ",1,0,0,,,,
+ASU TableTop Manipulation,UR5,Single Arm,13,"joint pos (6)
+gripper width (1)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3), 
+gripper position (1) ",1,0,0,,,,
+Stanford Robocook,Franka,Single Arm,5,"EEF xyz (3)
+EEF rpy (3)
+gripper width (1) ",EEF Position,"EEF vel xyz (3)
+EEF angular vel rpy (3)
+gripper vel (3)",4,4,0,,,,
+ETH Agent Affordances,Franka,Mobile Manipulator,67,"EEF xyz (3)
+EEF rpy (3)
+gripper open/close (1) 
+door opening angle (1)",EEF Position,"EEF vel xyz (3)
+EEF angular vel rpy (3)",0,1,0,,,,
+Imperial Wrist Cam,Sawyer,Single Arm,10,gripper state (1),EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3), 
+gripper position (0 or 1) (1) ",1,0,1,,,,
+CMU Franka Pick-Insert Data,Franka,Single Arm,20,"joint pos (7)
+gripper width (1)
+joint torques (6)
+EEF force (6)",EEF Position,"EEF xyz (3)
+EEF quaternion (4)
+gripper open/cose (1) ",2,0,1,,,,
+QUT Dexterous Manpulation,Franka,Mobile Manipulator,30,,EEF Position,,2,0,1,,,,
+MPI Muscular Proprioception,PAMY2,Single Arm,500,,Desired pressures for the artificial muscles,,0,0,0,,,,
+UIUC D3Field,Kinova Gen3,Single Arm,1,"EEF homogeneous matrix (4,4)",EEF Position,EEF delta xyz (3),4,4,0,,,,
+Austin Mutex,Franka,Single Arm,20,"joint pos (7)
+gripper width (1)
+EEF homogeneous matrix (16)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3), 
+gripper position (0 or 1) (1) ",2,0,1,,,,
+Berkeley Fanuc Manipulation,Fanuc Mate,Single Arm,10,"joint pos (6)
+gripper status (1)
+joint vel(6)",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3)",2,0,1,,,,
+CMU Food Manipulation,Franka,Single Arm,10,,EEF Position,,3,0,2,,,,
+CMU Play Fusion,Franka,Single Arm,5,"joint pos (7)
+gripper width (1)",EEF Position,"EEF delta xyz (3)
+EEF delta quaternion (4)
+gripper open/close (1)",1,0,0,,,,
+CMU Stretch,Hello Stretch,Mobile Manipulator,10,"EEF xyz (3)
+gripper pose (1) ",EEF Position,"EEF delta xyz (3)
+EEF delta rpy (3), 
+gripper open/close (1)",1,0,0,,,,
+RECON,Jackal,Wheeled Robot,3,"EEF xy (2)
+EEF yaw (1)",EEF velocity,"action (2)
+action_angle (3)",2,1,1,,,,
+CoryHall,RC Car,Wheeled Robot,5,"EEF xy (2)
+EEF yaw (1)",EEF velocity,"action (2)
+action_angle (3)",1,0,0,,,,
+SACSoN,TurtleBot 2,Wheeled Robot,10,"EEF xy (2)
+EEF yaw (1)",EEF Position,"action (2)
+action_angle (3)",2,1,0,,,,
+RoboVQA,Google Robot,"3 embodiments: single-armed robot, single-armed human, single-armed human using grasping tools",10,image-answer-question pair ,EEF Position,image-answer-question pair ,1,1,0,,,,
+ALOHA,ViperX Bimanual,Bi-Manual,50,,EEF Position,,4,0,2,,,,
+DROID,Franka,Single Arm,15,,EEF Position,,3,3,1,,,,
+ConqHose,Spot,Mobile Manipulator,30,"Joint states (2*20)
+Body vel (3 lin, 3 ang)
+is_holding_item (1)
+food_states (3 pos, 1 contact)",EEF velocity,"EEF delta xyz (3)
+EEF delta rpy (3), 
+gripper position (0 or 1) (1) ",6,0,0,,,,
+DobbE,Hello Stretch,Mobile Manipulator,3.75,"gripper width (1)
+EEF quaternion (4)
+EEF rpy (3)
+EEF xyz (3)",EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper closedness action (1)",1,1,1,,,,
+FMB,Franka,Single Arm,10,"EEF force (3)
+EEF pose (7)
+EEF torque (3)
+EEF vel (6)
+joint pos (7)
+joint vel (7)",EEF velocity,"EEF vel  xyz (3)
+EEF vel rpy (3), 
+gripper pose (1) ",4,4,2,,,,
+IO-AI Office PicknPlace,Human,Human,30,8 dim state (need to check),EEF Position,"EEF xyz (3)
+EEF rpy (3)
+gripper closedness action (1)",4,1,1,,,,
+MimicPlay,Franka,Single Arm,15,"EEF pose (7)
+gripper position (1)
+joint pos(7)
+joint vel (7)","Operational space control (OSC), which is similar to Task space position control but OSC is impedance control with consideration of the mass matrix. OSC is also used by VIOLA.",7,3,0,0,,,,
+MobileALOHA,MobileALOHA,Mobile Manipulator,50,joint pos (14),Joint position,"joint_positions (14) 
+linear, angular base vel (2)",3,0,0,,,,
+RoboSet,Franka,Single Arm,5,"joint pos (8)
+joint velocity (8)",Joint position,"joint_positions (7)
+gripper open/close (1)",4,4,1,,,,
+TidyBot,TidyBot,Mobile Manipulator,,object (string),Our dataset specifies a target receptacle for each object,string,0,0,0,,,,
+VIMA,UR5,Single Arm,N/A due to use of primitive skills,,Primitive skills (pick-place and push),"pose0_position (3)
+pose0_rotation (4)
+pose1_position (3)
+pose1_rotation (4)",2,0,0,,,,
+,,,,,,,2,2,2,,,,
+,,,,,,,5,5,1,,,,
