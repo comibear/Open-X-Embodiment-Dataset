@@ -682,3 +682,10 @@ env2xml = {
     'Berkeley Cable Routing': 'mujoco_menagerie/berkeley_cable_routing/cable_routing.xml',
     
 }
+
+if __name__ == "__main__":
+    for env_name in DATA_CONFIG.keys():
+        if DATA_CONFIG[env_name]:
+            data = DATA_CONFIG[env_name]
+            if data['EEF_POS'] is None and data['JOINT_POS'] is None:
+                print(env_name)

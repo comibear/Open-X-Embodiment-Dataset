@@ -15,10 +15,10 @@ from data_unification.src.data.utils.data_utils import (
 )
 from functools import partial
 
-from package.mujoco_usage.mujoco_parser import MuJoCoParserClass
-from package.helper.transformation import r2quat
+from package.mujoco_usage.mujoco_parser import *
+from package.helper.transformation import pR2xyzq, rpy2quat, r2quat, quat2r
 from data_unification.src.data.xml_parser import parse_robot_structure
-from data_unification.config import DATA_CONFIG, env2xml
+from data_unification.config import DATA_CONFIG, CTRL_FREQ, env2xml
 
 log = logging.getLogger(__name__)
 
@@ -49,46 +49,128 @@ FeaturesDict({
 def get_language_instruction(traj: dict) -> str:
     return traj["language_instruction"]
 
-# TODO: 1. Adding zero state (structure) : COMPLETE
+# TODO: 1. Adding zero state (structure)
 def get_zero_state(env: MuJoCoParserClass, exclude_links: Sequence[str] = ['world']) -> np.ndarray:
     env.reset()
     env.forward(q=np.zeros(env.n_qpos))
     
-    body_names = [body_name for body_name in env.body_names if body_name not in exclude_links]
+    _, body_names = parse_robot_structure(env.name)
     body_pos = [env.get_pR_body(body_name) for body_name in body_names]
-    body_pos = [np.append(pos[0], r2quat(pos[1])) for pos in body_pos]
+    body_pos = [pR2xyzq(pos) for pos in body_pos]
     body_pos = np.concatenate(body_pos, axis=0)
     
     return body_pos
 
 # TODO: 2. Adding end-effector pose
-def get_eef_pose(env: MuJoCoParserClass, traj) -> np.ndarray:
-    env.reset()
-    if DATA_CONFIG[env.name]['JOINT_POS']:
-        joint_pos = traj['observation']['joint_pos']
-        for jp in len(joint_pos):
-            env.forward(q=jp, )
-    else:
-        joint_pos = np.zeros(env.n_qpos)
-    
-    return env.ee_pose
-
 # TODO: 3. Adding joint positions
-def get_joint_positions(env: MuJoCoParserClass) -> np.ndarray:
-    env.reset()
-    env.forward(q=np.zeros(env.n_qpos))
-    
-    return env.qpos
-
 # TODO: 4. Adding Action (eef velocities)
-def get_eef_velocity(env: MuJoCoParserClass) -> np.ndarray:
-    env.reset()
-    env.forward(q=np.zeros(env.n_qpos))
+def all2xyzq(data, format: str = 'quaternion') -> np.ndarray:
+    if format == 'quaternion':
+        return data
+    elif format == 'rpy':
+        return np.concatenate([data[:3], rpy2quat(data[3:])], axis=0)
+    elif format == 'homogeneous_matrix':
+        # Extract rotation matrix and position from 4x4 homogeneous matrix
+        data = data.reshape(4, 4)
+        pos = data[:3, 3]
+        rot_mat = data[:3, :3]
+        quat = r2quat(rot_mat)
+        return np.concatenate([pos, quat], axis=0)
+    elif format == 'shifted_quaternion':
+        # Convert from xyzw to wxyz quaternion format
+        pos = data[:3]
+        quat = np.array([data[6], data[3], data[4], data[5]])
+        return np.concatenate([pos, quat], axis=0)
+    elif format == 'yaw':
+        # Set roll and pitch to 0, keep yaw
+        pos = data[:3]
+        yaw = data[3]
+        rpy = np.array([0.0, 0.0, yaw])
+        return np.concatenate([pos, rpy2quat(rpy)], axis=0)
+    else:
+        raise ValueError(f"Invalid format: {format}")
+
+def get_additional_data(env: MuJoCoParserClass, traj, traj_len: int) -> np.ndarray:
+    env_name = env.name
+    joint_names, body_names = parse_robot_structure(env_name)
     
-    return env.ee_vel
+    joint_pos_list = np.array([])
+    eef_pos_list = np.array([])
+    eef_vel_list = np.array([])
+    
+    env.reset()
+    prev_eef_pos = None
+    if DATA_CONFIG[env_name]['JOINT_POS']:
+        key = DATA_CONFIG[env_name]['JOINT_POS']['key']
+        j_s, j_e = DATA_CONFIG[env_name]['JOINT_POS']['start'], DATA_CONFIG[env_name]['JOINT_POS']['end']
+        
+        for step in tfds.as_numpy(traj["steps"]):
+            jp = step["observation"][key][j_s:j_e]
+            joint_pos_list = np.append(joint_pos_list, jp) # joint_pos
+        
+            env.forward(q=jp, joint_names=joint_names)
+            eef_pos = pR2xyzq(env.get_pR_body(body_name='tcp_link'))
+            eef_pos_list = np.append(eef_pos_list, eef_pos) # eef_pos
+            
+            if prev_eef_pos is not None:
+                eef_vel = (eef_pos - prev_eef_pos) / CTRL_FREQ[env_name]
+                eef_vel_list = np.append(eef_vel_list, eef_vel) # eef_vel
+            
+            prev_eef_pos = eef_pos
+            
+    elif DATA_CONFIG[env_name]['EEF_POSE']:
+        key = DATA_CONFIG[env_name]['EEF_POSE']['key']
+        e_s, e_e = DATA_CONFIG[env_name]['EEF_POSE']['start'], DATA_CONFIG[env_name]['EEF_POSE']['end']
+        
+        q0 = np.array(np.zeros(env.n_qpos)) # TODO: some environments requires specific initial joint configuration
+        q_curr = q0.copy()
+        for step in tfds.as_numpy(traj["steps"]):
+            eef_pos = step["observation"][key][e_s:e_e]
+            eef_pos = all2xyzq(eef_pos)
+            eef_pos_list = np.append(eef_pos_list, eef_pos) # eef_pos
+            
+            if prev_eef_pos is not None:
+                eef_vel = (eef_pos - prev_eef_pos) / CTRL_FREQ[env_name]
+                eef_vel_list = np.append(eef_vel_list, eef_vel) # eef_vel
+                
+            prev_eef_pos = eef_pos
+            
+            # Joint positions
+            
+            # Get target end-effector pose
+            p_target = eef_pos[:3]
+            R_target = quat2r(eef_pos[3:])
+            
+            # Solve IK for current target
+            qpos, ik_err_stack, _ = solve_ik(
+                env = env,
+                joint_names_for_ik = joint_names, 
+                body_name_trgt = 'tcp_link',
+                q_init = q_curr,
+                p_trgt = p_target,
+                R_trgt = R_target,
+                max_ik_tick = 500,
+                ik_stepsize = 1.0,
+                ik_eps = 1e-2,
+                ik_th = np.radians(5.0),
+                render = False,
+                verbose_warning = False
+            )
+            
+            # Update joint positions if IK succeeded
+            if np.abs(ik_err_stack).max() < 1e-2:
+                q_curr = qpos.copy()
+                joint_pos_list = np.append(joint_pos_list, qpos) # joint_pos
+            else:
+                q_curr = q0.copy()
+                raise ValueError("IK failed")
+            
+            env.forward(q=qpos, joint_names=joint_names)
+    
+    return joint_pos_list, eef_pos_list, eef_vel_list
 
 # TODO: 5. Exception Handler
-def get_exception_handler(env_name: str) -> Callable:
+def refine_exceptions(env_name: str) -> Callable:
     if env_name in DATA_CONFIG:
         return DATA_CONFIG[env_name]
     else:

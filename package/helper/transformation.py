@@ -277,3 +277,12 @@ def rpy_deg2r(rpy_deg):
         Roll Pitch Yaw in Degree to Rotation Matrix
     """
     return rpy2r(np.deg2rad(rpy_deg))
+
+def pR2xyzq(pR):
+    """
+        Position and Rotation to xyzq
+    """
+    p = pR[0]
+    R = pR[1]
+    q = r2quat(R)
+    return np.concatenate([p,q])
