@@ -36,9 +36,13 @@ def get_dataset(dataset,display_key='image'):
             + "Here is the observation spec:\n"
             + str(b.info.features['steps']['observation']))
 
-    ds = b.as_dataset(split='train[:30]').shuffle(30)   # take only first 10 episodes
+    ds = b.as_dataset(split='train[:10]').shuffle(10)   # take only first 10 episodes
     iterator = iter(ds)
     return ds, iterator
+
+def get_features(dataset):
+    b = tfds.builder_from_directory(builder_dir=dataset2path(dataset))
+    return b.info.features
 
 def get_image_from_episode(episode, display_key='image'):
     images = [step['observation'][display_key] for step in episode['steps']]

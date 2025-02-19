@@ -7,7 +7,7 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 from tensorflow_datasets.core.dataset_builder import DatasetBuilder
 
-from src.data.dlimp.utils import parallel_vmap
+from data_unification.src.data.dlimp.utils import parallel_vmap
 
 
 def _wrap(f, is_flattened):

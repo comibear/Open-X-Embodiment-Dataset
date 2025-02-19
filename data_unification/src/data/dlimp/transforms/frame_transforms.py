@@ -3,8 +3,8 @@ from typing import Any, Callable, Dict, Sequence, Tuple, Union
 
 import tensorflow as tf
 
-from src.data.dlimp.augmentations import augment_image
-from src.data.dlimp.utils import resize_depth_image, resize_image
+from data_unification.src.data.dlimp.augmentations import augment_image
+from data_unification.src.data.dlimp.utils import resize_depth_image, resize_image
 
 from .common import selective_tree_map
 

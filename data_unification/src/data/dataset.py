@@ -5,7 +5,7 @@ import numpy as np
 import logging
 from typing import Optional, Mapping, Sequence, Tuple, Union, Callable
 
-from data_unification.src.data.dlimp.dataset import DLataset as dl
+import data_unification.src.data.dlimp as dl
 from data_unification.src.utils.spec import ModuleSpec
 from data_unification.src.data.utils.data_utils import (
     NormalizationType,
@@ -45,9 +45,6 @@ FeaturesDict({
     }),
 })
 '''
-# TODO: 0. Adding language instruction
-def get_language_instruction(traj: dict) -> str:
-    return traj["language_instruction"]
 
 # TODO: 1. Adding zero state (structure)
 def get_zero_state(env: MuJoCoParserClass, exclude_links: Sequence[str] = ['world']) -> np.ndarray:
@@ -280,14 +277,16 @@ def make_dataset_from_rlds(
         old_obs = traj["observation"]
         new_obs = {}
 
-        # Image observations
+        # Image / Depth observations
         for old_key in old_obs.keys():
             if 'image' in old_key:
                 new_obs[old_key] = old_obs[old_key]
-            elif 'depth' in old_key:
+            if 'depth' in old_key:
                 new_obs[old_key] = old_obs[old_key]
-            elif 'language' in old_key:
-                new_obs[old_key] = old_obs[old_key]
+        
+        for lang_key in old_obs.keys():
+            if 'language' in lang_key:
+                new_obs[lang_key] = old_obs[lang_key]
                 
         # add timestep info
         new_obs["timestep"] = tf.range(traj_len)        
@@ -297,24 +296,33 @@ def make_dataset_from_rlds(
         env = MuJoCoParserClass(rel_xml_path=xml_path,verbose=False)
         
         # TODO: Zero state
-        env.reset()
-        env.forward(q=np.zeros(env.n_qpos))
-        
         # TODO: eef velocity
-        
         # TODO: joint positions
-        
-        
         # TODO: eef position
         
+        zero_state_structure = get_zero_state(env)
+        joint_pos, eef_pos, eef_vel = get_additional_data(env, traj, traj_len)
         
+        new_obs['joint_pos'] = joint_pos
+        new_obs['eef_pos'] = eef_pos
+        new_obs['zero_state_structure'] = zero_state_structure
         
-        # Language instructions
         new_traj = {
             "observation": new_obs,
-            "action": tf.cast(traj["action"], tf.float32),
-            "dataset_name": tf.repeat(name, traj_len),
+            "action": {
+                "action": tf.cast(traj["action"], tf.float32),
+                "eef_vel": eef_vel,
+            }
         }
+        
+        # Language instructions
+        for key in traj['steps'].keys():
+            if "language" in key:
+                new_traj[key] = traj["steps"][key]
+            else:
+                for ob_key in traj["steps"]["observation"].keys():
+                    if "language" in ob_key:
+                        new_traj[ob_key] = traj["steps"]["observation"][ob_key]
 
         return new_traj
 
